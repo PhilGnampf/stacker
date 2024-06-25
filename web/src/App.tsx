@@ -7,7 +7,8 @@ function App() {
   const [data, setData] = useState<LeaderboardEntry[]>([]);
 
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_BASE_URL;
+    // Determine the base URL dynamically
+    const apiUrl = `${window.location.protocol}//${window.location.hostname}:9090`;
 
     fetch(`${apiUrl}/highscores`)
       .then(response => response.json())
