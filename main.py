@@ -9,6 +9,14 @@ import json
 import time
 import pygame
 import sys
+import RPi.GPIO as GPIO
+
+# GPIO setup
+BUTTON_PIN = 17
+SET_PIN = 27
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(SET_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Initialize Pygame
 pygame.init()
@@ -54,9 +62,12 @@ move_speed = init_move_speed
 move_speed_diff = 1
 
 score = 0
+button_pressed = False
+button_pressed_set = False
 
 # ------------------------------------------------------------------- Menu screen starts here -------------------------------------------------------------------
 def start_menu():
+    global button_pressed
     while True:
         pygame.font.init()
         font = pygame.font.Font(font_path, 36)
@@ -70,15 +81,19 @@ def start_menu():
         pygame.display.flip()
         clock.tick(tick_speed)
         
+        if GPIO.input(BUTTON_PIN) == GPIO.LOW and not button_pressed:
+            print("Button pressed")
+            button_pressed = True
+            start_game()
+            break
+        elif GPIO.input(BUTTON_PIN) == GPIO.HIGH:
+            button_pressed = False
+        
         # Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    start_game()
-                    break
 
 # ------------------------------------------------------------------- Menu screen ends here -------------------------------------------------------------------
 # ------------------------------------------------------------------- Main Game functions start here -------------------------------------------------------------------
@@ -158,7 +173,7 @@ def place_blocks():
 # ------------------------------------------------------------------- Main game loop starts here -------------------------------------------------------------------
 
 def start_game():
-    global block_amount, block_x, block_y, score, direction, move_speed, tick_speed, current_move_speed
+    global block_amount, block_x, block_y, score, direction, move_speed, tick_speed, current_move_speed, button_pressed
 
     # Reset game variables
     block_amount = 3
@@ -176,15 +191,18 @@ def start_game():
 
     # Game loop
     while True:
+        if GPIO.input(BUTTON_PIN) == GPIO.LOW and not button_pressed:
+            print("Button pressed")
+            button_pressed = True
+            place_blocks()
+        elif GPIO.input(BUTTON_PIN) == GPIO.HIGH:
+            button_pressed = False
 
         # Event handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    place_blocks()
 
         # Draw static grid
         screen.fill(BLACK)
@@ -223,6 +241,8 @@ def save_highscores(highscores):
         json.dump(highscores, file, indent=4)
 
 def character_selection(characters, label, max_length):
+    global button_pressed, button_pressed_set
+    
     index_cycle = cycle(range(len(characters)))
     current_char = next(index_cycle)
     input_string = ""
@@ -236,19 +256,26 @@ def character_selection(characters, label, max_length):
         screen.blit(text, text_rect)
         pygame.display.flip()
 
+        if GPIO.input(BUTTON_PIN) == GPIO.LOW and not button_pressed:
+            print("Button pressed")
+            current_char = next(index_cycle)
+        elif GPIO.input(BUTTON_PIN) == GPIO.HIGH:
+            button_pressed = False
+        
+        if GPIO.input(SET_PIN) == GPIO.LOW and not button_pressed_set:
+            print("Button pressed")
+            input_string += characters[current_char]
+            if len(input_string) == max_length:
+                return input_string
+            index_cycle = cycle(range(len(characters)))  # Zyklus zurücksetzen
+            current_char = next(index_cycle)
+        elif GPIO.input(SET_PIN) == GPIO.HIGH:
+            button_pressed_set = False
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:  # Nächster Buchstabe
-                    current_char = next(index_cycle)
-                elif event.key == pygame.K_RETURN:  # Buchstabe speichern
-                    input_string += characters[current_char]
-                    if len(input_string) == max_length:
-                        return input_string
-                    index_cycle = cycle(range(len(characters)))  # Zyklus zurücksetzen
-                    current_char = next(index_cycle)
 
 def show_message(message, duration):
     screen.fill((0, 0, 0))  # Schwarzer Hintergrund
