@@ -45,7 +45,7 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 pygame.display.set_caption("Stacker Game")
 
 # Load custom font
-font_path = "./RetroGaming.ttf"
+font_path = "RetroGaming.ttf"
 
 # Initialize grid
 grid = [[0 for _ in range(GRID_WIDTH)] for _ in range(GRID_HEIGHT)]
