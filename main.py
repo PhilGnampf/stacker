@@ -242,7 +242,6 @@ def save_highscores(highscores):
 
 def character_selection(characters, label, max_length):
     global button_pressed, button_pressed_set
-    button_pressed, button_pressed_set = False, False
     
     index_cycle = cycle(range(len(characters)))
     current_char = next(index_cycle)
@@ -292,6 +291,7 @@ def show_message(message, duration):
 # ------------------------------------------------------------------- High Score Screen starts here --------------------------------------------------------------
 
 def start_highscore(score):
+    global button_pressed, button_pressed_set
     while True:
         highscores = load_highscores()
         alphabet = "ABCDE"
@@ -299,6 +299,9 @@ def start_highscore(score):
 
         # Namen eingeben
         name = character_selection(alphabet, "Name", max_length=3)
+        button_pressed_set = False
+        button_pressed = False
+        
         # Passwort eingeben
         password = character_selection(digits, "Password", max_length=2)
         
