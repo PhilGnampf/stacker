@@ -259,6 +259,7 @@ def character_selection(characters, label, max_length):
         if GPIO.input(BUTTON_PIN) == GPIO.LOW and not button_pressed:
             print("Button pressed")
             current_char = next(index_cycle)
+            button_pressed = True
         elif GPIO.input(BUTTON_PIN) == GPIO.HIGH:
             button_pressed = False
         
@@ -269,6 +270,7 @@ def character_selection(characters, label, max_length):
                 return input_string
             index_cycle = cycle(range(len(characters)))  # Zyklus zurücksetzen
             current_char = next(index_cycle)
+            button_pressed_set = True
         elif GPIO.input(SET_PIN) == GPIO.HIGH:
             button_pressed_set = False
 
