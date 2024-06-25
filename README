@@ -13,3 +13,31 @@ To play start the main.py
 
 Api Backend: :9090/highscore
 Webview: :5000
+
+For automation:
+Create Service for Backend:
+
+sudo nano /etc/systemd/system/stacker.service
+
+[Unit]
+Description=Stacker Docker Compose and Main Script
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=path to project dir
+ExecStart=/usr/local/bin/docker compose up -d
+ExecStartPost=/usr/bin/python3 path to main.py
+
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable stacker.service
+
+sudo systemctl start stacker.service
+
+sudo systemctl status stacker.service
