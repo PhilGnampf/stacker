@@ -89,10 +89,10 @@ def start_menu():
         elif GPIO.input(BUTTON_PIN) == GPIO.HIGH:
             button_pressed = False
 
-        if GPIO.input(SET_PIN) == GPIO.LOW:
-            print("Button pressed")
-            pygame.quit()
-            sys.exit()
+        while GPIO.input(SET_PIN) == GPIO.LOW:
+            if GPIO.input(BUTTON_PIN) == GPIO.LOW:
+                pygame.quit()
+                sys.exit()
         
         # Event handling
         for event in pygame.event.get():
