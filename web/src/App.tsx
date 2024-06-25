@@ -7,7 +7,7 @@ function App() {
   const [data, setData] = useState<LeaderboardEntry[]>([]);
 
   useEffect(() => {
-    const apiUrl = "http://arcadepc:9090";
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
     fetch(`${apiUrl}/highscores`)
       .then(response => response.json())

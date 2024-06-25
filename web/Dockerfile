@@ -13,6 +13,9 @@ RUN npm install
 # Copy the source code
 COPY . .
 
+# Copy .env file
+COPY ../.env ./
+
 # Build the Vite project
 RUN npx tsc && npm run build
 
