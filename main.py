@@ -41,7 +41,7 @@ BLUE = (31, 81, 255)
 
 # Game variables
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 pygame.display.set_caption("Stacker Game")
 
 # Load custom font
