@@ -1,0 +1,18 @@
+{
+    "ABC": {
+        "password": "12",
+        "highscore": 15
+    },
+    "AAA": {
+        "password": "11",
+        "highscore": 18
+    },
+    "ABA": {
+        "password": "11",
+        "highscore": 17
+    },
+    "ACE": {
+        "password": "22",
+        "highscore": 15
+    }
+}

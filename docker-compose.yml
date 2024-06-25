@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  highscore-service:
+    build: .
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./highscore.json:/app/highscore.json
+
+  web:
+    build:
+      context: ./web
+    ports:
+      - "5000:5000"
