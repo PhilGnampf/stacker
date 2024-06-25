@@ -10,3 +10,6 @@ To play start the main.py
 4 Clone Repo
 5 Start Backend and Webview with docker compose up
 6 run python script
+
+Api Backend: :9090/highscore
+Webview: :5000
