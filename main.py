@@ -299,8 +299,7 @@ def start_highscore(score):
 
         # Namen eingeben
         name = character_selection(alphabet, "Name", max_length=3)
-        button_pressed_set = False
-        button_pressed = False
+        button_pressed_set = True
         
         # Passwort eingeben
         password = character_selection(digits, "Password", max_length=2)
