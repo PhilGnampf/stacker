@@ -7,7 +7,7 @@ function App() {
   const [data, setData] = useState<LeaderboardEntry[]>([]);
 
   useEffect(() => {
-    const apiUrl = "http://arcadepc:9090/highscores";
+    const apiUrl = "http://arcadepc:9090";
 
     fetch(`${apiUrl}/highscores`)
       .then(response => response.json())
