@@ -15,8 +15,14 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
+    "@types/babel__core": "^7.1.14",
+    "@types/babel__generator": "^7.6.3",
+    "@types/babel__template": "^7.4.1",
+    "@types/babel__traverse": "^7.4.2",
+    "@types/estree": "^0.0.39",
+    "@types/prop-types": "^15.7.5",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.2",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",

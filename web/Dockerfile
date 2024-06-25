@@ -10,14 +10,11 @@ COPY package*.json ./
 # Install dependencies including devDependencies
 RUN npm install
 
-# Ensure TypeScript is installed
-RUN npm install -g typescript
-
 # Copy the source code
 COPY . .
 
 # Build the Vite project
-RUN npm run build
+RUN npx tsc && npm run build
 
 # Install a simple web server to serve the built files
 RUN npm install -g serve
