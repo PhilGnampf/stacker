@@ -11,3 +11,5 @@ services:
       context: ./web
     ports:
       - "5000:5000"
+    environment:
+      - VITE_API_BASE_URL=http://host.docker.internal:9090
