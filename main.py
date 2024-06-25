@@ -242,6 +242,7 @@ def save_highscores(highscores):
 
 def character_selection(characters, label, max_length):
     global button_pressed, button_pressed_set
+    button_pressed, button_pressed_set = False, False
     
     index_cycle = cycle(range(len(characters)))
     current_char = next(index_cycle)
